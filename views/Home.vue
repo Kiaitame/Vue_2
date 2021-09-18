@@ -6,13 +6,13 @@
       <label><input type="radio" name="gender" value="woman">女性</label>
     <p>{{ msg_2 }}</p>
       <select id="year" name="year" v-model="year" v-on:change="countdays">
-        <option v-for="nengo in nengos" :value="nengo.year" :key="nengo.year">{{ nengo.label }}</option>
+        <option v-for="y in years" :value="y.year" :key="y.year">{{ y.label }}</option>
       </select>年
       <select id="month" name="month" v-model="month" v-on:change="countdays">{{ month }}
-        <option v-for="i in 12" :value="i" :key="i">{{ i }}</option>
+        <option v-for="m in 12" :value="m" :key="m">{{ m }}</option>
       </select>月
       <select id="day" name="day" v-model="day">{{ day }}
-            <option v-for="day in days_max" :value="day" :key="day">{{ day }}</option>
+            <option v-for="d in daysMax" :value="d" :key="d">{{ d }}</option>
       </select>日<br>
       <router-link  to="/Insurance"><button>次へ進む</button></router-link>
     </div>
@@ -28,33 +28,35 @@
         year: '2000',
         month: '1',
         day: '1',
-        nengos: []
+        years: [],
+        daysMax: []
       }
     },
     created: function(){
-      this.nengos = this.generate();
+      this.years = this.generate();
       this.countdays();
     },
     methods: {
       generate(){
-        const nengos = [];
-        let nowYear = new Date();
+        const years = [];
+        const nowYear = new Date();
         for(let y= nowYear.getFullYear(); y>1920; y--){
           if(y>2018){
-            nengos.push({"year":y,"label":`${y} (令和${y-2018}年)`});
+            years.push({year:y, label:`${y} (令和${y-2018}年)`});
           } else if (y>1988) {
-            nengos.push({"year":y,"label":`${y} (平成${y-1988}年)`});
+            years.push({year:y, label:`${y} (平成${y-1988}年)`});
           } else if (y>1925) {
-            nengos.push({"year":y,"label":`${y} (昭和${y-1925}年)`});
+            years.push({year:y, label:`${y} (昭和${y-1925}年)`});
           } else if (y>1911) {
-            nengos.push({"year":y,"label":`${y} (大正${y-1911}年)`});
+            years.push({year:y, label:`${y} (大正${y-1911}年)`});
           }
         }
-        return nengos;
+        return years;
       },
       countdays: function(){
-        this.days_max = new Date(this.year,this.month,0).getDate();
-        return this.days_max;
+        const daysMax = [];
+        this.daysMax = new Date(this.year,this.month,0).getDate();
+        return daysMax;      
       }
     }
   }
