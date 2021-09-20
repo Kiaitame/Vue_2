@@ -2,17 +2,17 @@
     <div id="Insurance">
       <h1>以下にお応えください</h1>
     <p>{{ msg_1 }}</p>
-      <label><input type="radio" name="answer_1" value="yes" v-model="visible">{{ yes }}</label>
-      <label><input type="radio" name="answer_1" value="no" v-model="visible">{{ no }}</label>
+      <label><input id="yes" type="radio" name="answer_1" value="はい" v-model="visible" v-on:change="getAnswer1">{{ yes }}</label>
+      <label><input id="no" type="radio" name="answer_1" value="いいえ" v-model="visible" v-on:change="getAnswer1">{{ no }}</label>
     <div id="Insurance2" v-if="visible">
     <p>{{ msg_2 }}</p>    
-      <label><input type="radio" name="answer_1" value="yes" v-model="visible2">{{ yes }}</label>
-      <label><input type="radio" name="answer_1" value="no" v-model="visible2">{{ no }}</label>
+      <label><input id="yes" type="radio" name="answer_2" value="はい" v-model="visible2" v-on:change="getAnswer2">{{ yes }}</label>
+      <label><input id="no" type="radio" name="answer_2" value="いいえ" v-model="visible2" v-on:change="getAnswer2">{{ no }}</label>
     </div>
     <div id="Insurance3" v-if="visible2">
     <p>{{ msg_3 }}</p>    
-      <label><input type="radio" name="answer_1" value="yes">{{ yes }}</label>
-      <label><input type="radio" name="answer_1" value="no">{{ no }}</label>
+      <label><input id="yes" type="radio" name="answer_3" value="はい" v-on:change="getAnswer3">{{ yes }}</label>
+      <label><input id="no" type="radio" name="answer_3" value="いいえ" v-on:change="getAnswer3">{{ no }}</label>
     </div>
       <br>
       <router-link  to="/"><button>前へ戻る</button></router-link>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import store from '../store/index'
 export default {
   name: 'Insurance',
   data(){
@@ -33,11 +34,38 @@ export default {
     visible: false,
     visible2: false
   }
-  }
-  // methods: {
-  //     Insurance: function(){
-  //       this.$router.push('/Insurance')
-  //     }
-  //   }
+  },
+  methods: {
+      getAnswer1(){
+        const element = document.getElementsByName('answer_1');
+        const len = element.length;
+        for(let i = 0; i < len; i++){
+          if(element[i].checked){
+            const val = element[i].value;
+            store.commit('setQa1',val);
+          }
+        }
+      },
+      getAnswer2(){
+        const element = document.getElementsByName('answer_2');
+        const len = element.length;
+        for(let i = 0; i < len; i++){
+          if(element[i].checked){
+            const val = element[i].value;
+            store.commit('setQa2',val);
+          }
+        }
+      },
+      getAnswer3(){
+        const element = document.getElementsByName('answer_3');
+        const len = element.length;
+        for(let i = 0; i < len; i++){
+          if(element[i].checked){
+            const val = element[i].value;
+            store.commit('setQa3',val);
+          }
+        }
+      },
+    }
 }
 </script>
