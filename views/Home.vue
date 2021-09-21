@@ -2,24 +2,23 @@
     <div id="home">
       <h1>お客様の情報を入力してください</h1>
     <p>{{ msg_1 }}</p>
-      <label><input type="radio" name="gender" id="man" value="男性" v-on:click="getGender">男性</label>
-      <label><input type="radio" name="gender" id="woman" value="女性" v-on:click="getGender">女性</label>
+      <label><input type="radio" name="gender" id="man" value="男性" v-model="gender">男性</label>
+      <label><input type="radio" name="gender" id="woman" value="女性" v-model="gender">女性</label>
     <p>{{ msg_2 }}</p>
-      <select id="year" name="year" v-model="year" v-on:change="countdays(); getYear()">
+      <select id="year" name="year" v-model="yearGetSet">
         <option v-for="y in years" :value="y.year" :key="y.year">{{ y.label }}</option>
       </select>年
-      <select id="month" name="month" v-model="month" v-on:change="countdays(); getMonth()">{{ month }}
+      <select id="month" name="month" v-model="monthGetSet">{{ month }}
         <option v-for="m in 12" :value="m" :key="m">{{ m }}</option>
       </select>月
-      <select id="day" name="day" v-model="day" v-on:change="getDay">{{ day }}
+      <select id="day" name="day" v-model="dayGetSet">{{ day }}
             <option v-for="d in daysMax" :value="d" :key="d">{{ d }}</option>
       </select>日<br>
-      <router-link  to="/Insurance"><button v-on:change="getYear(); getMonth(); getDay()">次へ進む</button></router-link>
+      <router-link  to="/Insurance"><button>次へ進む</button></router-link>
     </div>
 </template>
 
 <script>
-import store from '../store/index'
   export default {
     name: 'Home',
     data() {
@@ -30,12 +29,46 @@ import store from '../store/index'
         month: '1',
         day: '1',
         years: [],
-        daysMax: []
+        daysMax: [],
       }
     },
     created: function(){
       this.years = this.generate();
       this.countdays();
+    },
+    computed: {
+      gender: {
+        get(){
+          return this.$store.getters.getgender;
+        },
+        set(value){
+          this.$store.commit('setGender',value);
+        }
+      },
+      yearGetSet: {
+        get(){
+          return this.$store.getters.getyear;
+        },
+        set(value){
+          this.$store.commit('setYear',value);
+        }
+      },
+      monthGetSet: {
+        get(){
+          return this.$store.getters.getmonth;
+        },
+        set(value){
+          this.$store.commit('setMonth',value);
+        }
+      },
+      dayGetSet: {
+        get(){
+          return this.$store.getters.getday;
+        },
+        set(value){
+          this.$store.commit('setDay',value);
+        }
+      }
     },
     methods: {
       generate(){
@@ -58,29 +91,7 @@ import store from '../store/index'
         const daysMax = [];
         this.daysMax = new Date(this.year,this.month,0).getDate();
         return daysMax;
-      },
-      getGender(){
-        const element = document.getElementsByName('gender');
-        const len = element.length;
-        for(let i = 0; i < len; i++){
-          if(element[i].checked){
-            const val = element[i].value;
-            store.commit('setGender',val);
-          }
-        }
-      },
-      getYear(){
-        const val = document.getElementById('year').value;
-        store.commit('setYear',val);
-      },
-      getMonth(){
-        const val = document.getElementById('month').value;
-        store.commit('setMonth',val);
-      },
-      getDay(){
-        const val = document.getElementById('day').value;
-        store.commit('setDay',val);
-      },
+      }
     }
   }
 </script>

@@ -2,7 +2,7 @@
     <div id="Result">
       <h1>以下の内容をご確認ください</h1>
     <p>{{ msg_1 }}</p>
-    <ul><li>{{ gender }}</li></ul>
+    <div><ul><li>{{ Gender }}</li></ul></div>
     <p>{{ msg_2 }}</p>
     <ul><li>{{ year }}年{{ month }}月{{ day }}日</li></ul>
     <p>{{ msg_3 }}</p>
@@ -30,31 +30,46 @@ export default {
   }
   },
   computed: {
-    gender(){
-      return this.$store.state.gender;
+    Gender:{
+      get(){
+      return this.$store.getters.getgender;
+      }
     },
-    year(){
-      return this.$store.state.year;
+    year:{
+      get(){
+      return this.$store.getters.getyear;
+      }
     },
-    month(){
-      return this.$store.state.month;
+    month:{
+      get(){
+      return this.$store.getters.getmonth;
+      }
     },
-    day(){
-      return this.$store.state.day;
-    },
-    ansWer1(){
-      return this.$store.state.QA1;
-    },
-    ansWer2(){
-      return this.$store.state.QA2;
-    },
-    ansWer3(){
-      return this.$store.state.QA3;
-    },
-    quesTion(){
-      return this.$store.state.question;
+    day:{
+      get(){
+      return this.$store.getters.getday;
     }
-
+    },
+    ansWer1:{
+      get(){
+      return this.$store.getters.getQA1;
+      }
+    },
+    ansWer2:{
+      get(){
+      return this.$store.getters.getQA2;
+      }
+    },
+    ansWer3:{
+      get(){
+      return this.$store.getters.getQA3;
+      }
+    },
+    quesTion:{
+      get(){
+      return this.$store.getters.getquestion;
+      }
+    }
   }
 }
 </script>

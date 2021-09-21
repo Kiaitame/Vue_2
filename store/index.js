@@ -14,30 +14,40 @@ export default new Vuex.Store({
     QA3:'',
     question:''
   },
+  getters:{
+    getgender: state => state.gender,
+    getyear: state => state.year,
+    getmonth: state => state.month,
+    getday: state => state.day,
+    getQA1: state => state.QA1,
+    getQA2: state => state.QA2,
+    getQA3: state => state.QA3,
+    getquestion: state => state.question
+  },
   mutations: {
-    setGender(state,val){
-      state.gender = val;
+    setGender(state,gender){
+      state.gender = gender;
     },
-    setYear(state,val){
-      state.year = val;
+    setYear(state,year){
+      state.year = year;
     },
-    setMonth(state,val){
-      state.month = val;
+    setMonth(state,month){
+      state.month = month;
     },
-    setDay(state,val){
-      state.day = val;
+    setDay(state,day){
+      state.day = day;
     },
-    setQa1(state,val){
-      state.QA1 = val;
+    setQa1(state,QA1){
+      state.QA1 = QA1;
     },
-    setQa2(state,val){
-      state.QA2 = val;
+    setQa2(state,QA2){
+      state.QA2 = QA2;
     },
-    setQa3(state,val){
-      state.QA3 = val;
+    setQa3(state,QA3){
+      state.QA3 = QA3;
     },
-    setQuestion(state,val){
-      state.question = val;
+    setQuestion(state,question){
+      state.question = question;
     }
   },
   actions: {
